@@ -5,7 +5,6 @@ def team_compete(x, y): #takes two team scores of the teams, compares them and d
     team2 = team_list[x]
 
     temp = random.randint(1, int(team1.score) + int(team2.score))
-    print(temp)
 
     #adds the team scores together, then finds a random number between that sum
     #takes the sum and finds out how close the game was
@@ -16,9 +15,10 @@ def team_compete(x, y): #takes two team scores of the teams, compares them and d
         team1.diff += (int(team1.score) - temp)
         team2.diff -= (int(team1.score) - temp)
     elif(temp > int(team1.score)):
-        team2.diff += (int(team2.score) - temp)
-        team1.diff -= (int(team2.score) - temp)
         team2.win +=1
+        team2.diff += (temp - int(team1.score))
+        team1.diff -= (temp - int(team1.score))
+
 
 
 
