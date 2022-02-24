@@ -1,18 +1,28 @@
 import random
 
 def team_compete(x, y): #takes two team scores of the teams, compares them and decides who wins
-    team1 = team_list[x]
-    team2 = team_list[y]
-    team1.diff += int(team1.score) - int(team2.score)
-    team2.diff += int(team2.score) - int(team1.score)
+    team1 = team_list[y]
+    team2 = team_list[x]
 
-    if (team1.score > team2.score):
+    temp = random.randint(1, int(team1.score) + int(team2.score))
+    print(temp)
+
+    #adds the team scores together, then finds a random number between that sum
+    #takes the sum and finds out how close the game was
+    #then adds/subtracts that difference from diff
+
+    if (temp <= int(team1.score)):
         team1.win +=1
-    elif(team2.score > team1.score):
+        team1.diff += (int(team1.score) - temp)
+        team2.diff -= (int(team1.score) - temp)
+    elif(temp > int(team1.score)):
+        team2.diff += (int(team2.score) - temp)
+        team1.diff -= (int(team2.score) - temp)
         team2.win +=1
 
 
-def swiss_bracket(): 
+
+def swiss_bracket():
     itt = 0 #itt = iteration
     for ii in range(teams - (itt + 1)):
         for jj in range(itt + (ii + 1)):
@@ -30,22 +40,22 @@ class Team():
         self.win = win
 
     def __str__(self):
-        return "Team: " + self.name + " | Score: " + str(self.score) + " | Wins: " + str(self.win) + " | Diff: " + str(self.diff)
+        return "Team: " + self.name + " | Score: " + str(self.score) + " | W/L: " + str(self.win) + "-" + str(teams-self.win-1) + " | Diff: " + str(self.diff)
     #returns the team's stats with no real formatting
-    
+
 team_list = [] #blank team list
 
 teams = int(input("How many teams?\n")) #gets # of teams
 
-while(teams > 16):
-    print("!!! Team limit of 16 exceeded !!!")
+while(teams > 32):
+    print("!!! Team limit of 32 exceeded !!!")
     teams = int(input("How many teams?\n"))
     #checking for how many teams there are, for this program I don't allow >16 since that's a bit much :)
 
 for i in range(teams):
     temp = input("Enter team " + str(i + 1) + " here: ")
     temp2 = input("Enter team " + str(i + 1) + "'s score here: ")
-    
+
     temp3 = Team(temp, temp2)
 
     team_list.append(temp3)
@@ -57,7 +67,7 @@ for i in range(teams):
 swiss_bracket()
 
 team_list.sort(key=lambda x: x.win, reverse=True) #sorts team_list by wins
-team_list.sort(key=lambda x: x.diff, reverse=True) #next sorts team_list by difference in scores
+
 
 for i in range(teams):
     print(team_list[i])
