@@ -40,7 +40,7 @@ class Team():
         self.win = win
 
     def __str__(self):
-        return "Team: " + self.name + " | Score: " + str(self.score) + " | W/L: " + str(self.win) + "-" + str(teams-self.win-1) + " | Diff: " + str(self.diff)
+        return self.name + " | Score: " + str(self.score) + " | W/L: " + str(self.win) + "-" + str(teams-self.win-1) + " | Diff: " + str(self.diff)
     #returns the team's stats with no real formatting
 
 team_list = [] #blank team list
@@ -66,9 +66,7 @@ for i in range(teams):
 
 swiss_bracket()
 
-team_list.sort(key=lambda x: x.win, reverse=True) #sorts team_list by wins
-
+team_list.sort(key = lambda x: (x.win, x.diff), reverse=True) #sorts team_list by wins
 
 for i in range(teams):
-    print(team_list[i])
-    #goes through all teams
+    print("#%s %s" % (i+1, team_list[i]))
