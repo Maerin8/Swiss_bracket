@@ -30,6 +30,22 @@ def swiss_bracket():
     #disgusting looking code which will go through a swiss bracket, making it impossible to play yourself
     #also makes it impossible to play an opponent twice
 
+def check_user_input(input):
+    try:
+        # Convert it into integer
+        val = int(input)
+        if(val > 32):
+            print("Number is greater than 32, try again!")
+            return False
+    except ValueError:
+        try:
+            # Convert it into float
+            val = float(input)
+            print("Input is a decimal number, teams must be a round number.")
+            return False
+        except ValueError:
+            print("Input isn't a number, try again!")
+            return False
 
 class Team():
     #initializes a team with parameters
@@ -45,12 +61,12 @@ class Team():
 
 team_list = [] #blank team list
 
-teams = int(input("How many teams?\n")) #gets # of teams
+teams = input("\nHow many teams?\n") #gets # of teams
+while((check_user_input(teams)) == False):
+    teams = input("\nHow many teams?\n") #gets # of teams
 
-while(teams > 32):
-    print("!!! Team limit of 32 exceeded !!!")
-    teams = int(input("How many teams?\n"))
-    #checking for how many teams there are, for this program I don't allow >16 since that's a bit much :)
+teams = int(teams)
+print("\nNumber of teams:",teams)
 
 for i in range(teams):
     temp = input("Enter team " + str(i + 1) + " here: ")
@@ -62,11 +78,9 @@ for i in range(teams):
     print("\n-----\n")
     #this code allows you to put in the team names and their respective scores, then appends it to the team list
 
-
-
 swiss_bracket()
 
 team_list.sort(key = lambda x: (x.win, x.diff), reverse=True) #sorts team_list by wins
 
 for i in range(teams):
-    print("#%s %s" % (i+1, team_list[i]))
+    print("#:%s %s" % (i+1, team_list[i]))
